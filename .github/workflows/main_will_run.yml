@@ -9,6 +9,7 @@ on:
       - opened
       - synchronize
       - reopened
+concurrency: group:${{ github.workflow }}-${{ github.event.pull_request.head.ref || github.ref_name }}
 
 jobs:
   make_success:
