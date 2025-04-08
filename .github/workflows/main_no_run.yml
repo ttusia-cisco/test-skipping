@@ -11,6 +11,11 @@ on:
       - reopened
 
 jobs:
+  make_success:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run success script
+        run: echo "Running success script"
   sub-workflow:
     uses: ./.github/workflows/sub-workflow.yml
     with:
