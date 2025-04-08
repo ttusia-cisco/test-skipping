@@ -16,6 +16,7 @@ jobs:
     with:
       run_job: true
   build:
+    needs: sub-workflow
     runs-on: ubuntu-latest
     steps:
       - name: Run build script
