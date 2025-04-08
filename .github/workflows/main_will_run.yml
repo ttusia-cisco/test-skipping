@@ -35,7 +35,7 @@ jobs:
     permissions:
       contents: read # Allows the job to read & checkout the contents of the repository
       actions: read # Allows the job to read the status of other actions
-    if: ${{ github.event_name == 'pull_request' && !cancelled() }}
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - name: Run build script
