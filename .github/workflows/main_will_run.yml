@@ -74,7 +74,7 @@ jobs:
         run: echo "Running fine"
 
   not_failure_job_build:
-    needs: [sub_job, sub_job_failed, sub_job_skipped]
+    needs: [sub_job, sub_job_skipped]
     permissions:
       contents: read # Allows the job to read & checkout the contents of the repository
       actions: read # Allows the job to read the status of other actions
@@ -85,7 +85,7 @@ jobs:
   
   not_failure_job_build_success:
     if: ${{ success() }}
-    needs: [sub_job, sub_job_failed, sub_job_skipped]
+    needs: [sub_job, sub_job_skipped]
     permissions:
       contents: read # Allows the job to read & checkout the contents of the repository
       actions: read # Allows the job to read the status of other actions
@@ -95,7 +95,7 @@ jobs:
         run: echo "Running fine"
   
   not_failure_job_build_not_cancelled:
-    needs: [sub_job, sub_job_failed, sub_job_skipped]
+    needs: [sub_job, sub_job_skipped]
     permissions:
       contents: read # Allows the job to read & checkout the contents of the repository
       actions: read # Allows the job to read the status of other actions
@@ -106,7 +106,7 @@ jobs:
         run: echo "Running fine"
   
   not_failure_job_build_not_cancelled_not_failure:
-    needs: [sub_job, sub_job_failed, sub_job_skipped]
+    needs: [sub_job, sub_job_skipped]
     permissions:
       contents: read # Allows the job to read & checkout the contents of the repository
       actions: read # Allows the job to read the status of other actions
