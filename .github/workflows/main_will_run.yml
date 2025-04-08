@@ -22,7 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run sub workflow script
-        run: echo ::error:: "Failing"
+        run: |
+          echo ::error:: "Failing"
   sub_job:
     runs-on: ubuntu-latest
     steps:
