@@ -17,12 +17,7 @@ jobs:
       - name: Run success script
         run: echo "Running success script"
   sub_job:
-    runs-on: ubuntu-latest
-    if: false
-    steps:
-      - name: Run sub workflow script
-        run: echo "Running sub workflow script"
-  sub_job2:
+    name: name: ${{true == true }}
     runs-on: ubuntu-latest
     if: false
     steps:
