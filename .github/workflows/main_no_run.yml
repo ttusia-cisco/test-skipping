@@ -18,8 +18,6 @@ jobs:
         run: echo "Running success script"
   sub_workflow:
     uses: ./.github/workflows/sub-workflow.yml
-    with:
-      run_job: true
   build:
     needs: sub_workflow
     runs-on: ubuntu-latest
