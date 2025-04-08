@@ -12,11 +12,6 @@ on:
 concurrency: group:${{ github.workflow }}-${{ github.event.pull_request.head.ref || github.ref_name }}
 
 jobs:
-  make_success:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run success script
-        run: echo "Running success script"
   sub_job:
     needs: []
     runs-on: ubuntu-latest
