@@ -12,14 +12,35 @@ on:
 concurrency: group:${{ github.workflow }}-${{ github.event.pull_request.head.ref || github.ref_name }}
 
 jobs:
-  sub_job:
+  sub_job_skipped:
     runs-on: ubuntu-latest
     if: false
     steps:
       - name: Run sub workflow script
         run: echo "Running sub workflow script"
+  sub_job_failed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run sub workflow script
+        run: echo ::error:: "Failing"
+  sub_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run sub workflow script
+        run: echo "Running sub workflow script"
+  
   build:
-    needs: [sub_job,]
+    needs: [sub_job_failed, sub_job_skipped]
+    permissions:
+      contents: read # Allows the job to read & checkout the contents of the repository
+      actions: read # Allows the job to read the status of other actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run build script
+        run: echo "Running fine"
+  
+  build_not_cancelled:
+    needs: [sub_job_failed, sub_job_skipped]
     permissions:
       contents: read # Allows the job to read & checkout the contents of the repository
       actions: read # Allows the job to read the status of other actions
@@ -28,3 +49,16 @@ jobs:
     steps:
       - name: Run build script
         run: echo "Running fine"
+  
+  build_not_cancelled_not_failure:
+    needs: [sub_job_failed, sub_job_skipped]
+    permissions:
+      contents: read # Allows the job to read & checkout the contents of the repository
+      actions: read # Allows the job to read the status of other actions
+    runs-on: ubuntu-latest
+    if: ${{ !cancelled() && !failure() }}
+    steps:
+      - name: Run build script
+        run: echo "Running fine"
+
+
