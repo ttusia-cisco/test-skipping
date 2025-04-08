@@ -13,12 +13,10 @@ concurrency: group:${{ github.workflow }}-${{ github.event.pull_request.head.ref
 
 jobs:
   sub_job:
-    needs: []
     runs-on: ubuntu-latest
     if: false
     steps:
       - name: Run sub workflow script
-        if: false
         run: echo "Running sub workflow script"
   build:
     needs: [sub_job,]
