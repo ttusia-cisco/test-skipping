@@ -19,6 +19,7 @@ jobs:
   sub_workflow:
     uses: ./.github/workflows/sub-workflow.yml
   build:
+    if: ${{ !cancelled() }}
     needs: sub_workflow
     runs-on: ubuntu-latest
     steps:
