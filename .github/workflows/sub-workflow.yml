@@ -10,7 +10,7 @@ on:
 jobs:
   sub_job:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.run_job}}
+    if: false
     steps:
       - name: Run sub workflow script
         run: echo "Running sub workflow script"

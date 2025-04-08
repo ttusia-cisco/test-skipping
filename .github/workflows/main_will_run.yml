@@ -16,12 +16,14 @@ jobs:
     steps:
       - name: Run success script
         run: echo "Running success script"
-  sub_workflow:
-    uses: ./.github/workflows/sub-workflow.yml
-    with:
-      run_job: true
+  sub_job:
+    runs-on: ubuntu-latest
+    if: false
+    steps:
+      - name: Run sub workflow script
+        run: echo "Running sub workflow script"
   build:
-    needs: sub_workflow
+    needs: sub_job
     runs-on: ubuntu-latest
     steps:
       - name: Run build script
