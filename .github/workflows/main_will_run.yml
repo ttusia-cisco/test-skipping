@@ -24,7 +24,7 @@ jobs:
       - name: Run sub workflow script
         run: echo "Running sub workflow script"
   build:
-    needs: sub_job
+    needs: [sub_job,]
     if: ${{ github.event_name == 'pull_request' && !cancelled() }}
     runs-on: ubuntu-latest
     steps:
