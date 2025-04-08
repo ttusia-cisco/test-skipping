@@ -30,7 +30,7 @@ jobs:
       - name: Run sub workflow script
         run: echo "Running sub workflow script"
   
-  build:
+  all_pre_jobs_build:
     needs: [sub_job, sub_job_failed, sub_job_skipped]
     permissions:
       contents: read # Allows the job to read & checkout the contents of the repository
@@ -40,7 +40,7 @@ jobs:
       - name: Run build script
         run: echo "Running fine"
   
-  build_success:
+  all_pre_jobs_build_success:
     if: ${{ success() }}
     needs: [sub_job, sub_job_failed, sub_job_skipped]
     permissions:
@@ -51,7 +51,7 @@ jobs:
       - name: Run build script
         run: echo "Running fine"
   
-  build_not_cancelled:
+  all_pre_jobs_build_not_cancelled:
     needs: [sub_job, sub_job_failed, sub_job_skipped]
     permissions:
       contents: read # Allows the job to read & checkout the contents of the repository
@@ -62,7 +62,50 @@ jobs:
       - name: Run build script
         run: echo "Running fine"
   
-  build_not_cancelled_not_failure:
+  all_pre_jobs_build_not_cancelled_not_failure:
+    needs: [sub_job, sub_job_failed, sub_job_skipped]
+    permissions:
+      contents: read # Allows the job to read & checkout the contents of the repository
+      actions: read # Allows the job to read the status of other actions
+    runs-on: ubuntu-latest
+    if: ${{ !cancelled() && !failure() }}
+    steps:
+      - name: Run build script
+        run: echo "Running fine"
+
+  not_failure_job_build:
+    needs: [sub_job, sub_job_failed, sub_job_skipped]
+    permissions:
+      contents: read # Allows the job to read & checkout the contents of the repository
+      actions: read # Allows the job to read the status of other actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run build script
+        run: echo "Running fine"
+  
+  not_failure_job_build_success:
+    if: ${{ success() }}
+    needs: [sub_job, sub_job_failed, sub_job_skipped]
+    permissions:
+      contents: read # Allows the job to read & checkout the contents of the repository
+      actions: read # Allows the job to read the status of other actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run build script
+        run: echo "Running fine"
+  
+  not_failure_job_build_not_cancelled:
+    needs: [sub_job, sub_job_failed, sub_job_skipped]
+    permissions:
+      contents: read # Allows the job to read & checkout the contents of the repository
+      actions: read # Allows the job to read the status of other actions
+    runs-on: ubuntu-latest
+    if: ${{ !cancelled() }}
+    steps:
+      - name: Run build script
+        run: echo "Running fine"
+  
+  not_failure_job_build_not_cancelled_not_failure:
     needs: [sub_job, sub_job_failed, sub_job_skipped]
     permissions:
       contents: read # Allows the job to read & checkout the contents of the repository
