@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Run sub workflow script
         run: |
-          echo ::error:: "Failing"
+          exit 1
   sub_job:
     runs-on: ubuntu-latest
     steps:
@@ -31,7 +31,18 @@ jobs:
         run: echo "Running sub workflow script"
   
   build:
-    needs: [sub_job_failed, sub_job_skipped]
+    needs: [sub_job, sub_job_failed, sub_job_skipped]
+    permissions:
+      contents: read # Allows the job to read & checkout the contents of the repository
+      actions: read # Allows the job to read the status of other actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run build script
+        run: echo "Running fine"
+  
+  build_success:
+    if: ${{ success() }}
+    needs: [sub_job, sub_job_failed, sub_job_skipped]
     permissions:
       contents: read # Allows the job to read & checkout the contents of the repository
       actions: read # Allows the job to read the status of other actions
@@ -41,7 +52,7 @@ jobs:
         run: echo "Running fine"
   
   build_not_cancelled:
-    needs: [sub_job_failed, sub_job_skipped]
+    needs: [sub_job, sub_job_failed, sub_job_skipped]
     permissions:
       contents: read # Allows the job to read & checkout the contents of the repository
       actions: read # Allows the job to read the status of other actions
@@ -52,7 +63,7 @@ jobs:
         run: echo "Running fine"
   
   build_not_cancelled_not_failure:
-    needs: [sub_job_failed, sub_job_skipped]
+    needs: [sub_job, sub_job_failed, sub_job_skipped]
     permissions:
       contents: read # Allows the job to read & checkout the contents of the repository
       actions: read # Allows the job to read the status of other actions
