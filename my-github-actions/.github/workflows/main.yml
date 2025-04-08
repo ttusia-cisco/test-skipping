@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  sub-workflow:
+    uses: ./.github/workflows/sub-workflow.yml
+    with:
+      run_job: true
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run build script
+        run: echo "Running fine"
