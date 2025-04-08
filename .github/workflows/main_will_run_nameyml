@@ -17,14 +17,14 @@ jobs:
       - name: Run success script
         run: echo "Running success script"
   sub_job:
-    name: ${{ true == true }}
+    name: ${{ github.event_name == 'pull_request' && 'PR' }} Running
     runs-on: ubuntu-latest
     if: false
     steps:
       - name: Run sub workflow script
         run: echo "Running sub workflow script"
   build:
-    needs: [sub_job, sub_job2]
+    needs: [sub_job]
     runs-on: ubuntu-latest
     steps:
       - name: Run build script
